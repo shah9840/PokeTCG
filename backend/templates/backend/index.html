@@ -5,23 +5,82 @@
 	<meta charset="utf-8">
 	<meta name="viewport",content="width=device-width,initial-scale=1">
 	<title>Document</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+	<link rel="stylesheet" type="text/css" href="static/style.css">
+
 </head>
 <body>
 	<h1>Pokemon gO`</h1>
+	<section class="main">
+		<div class="main-card" id="maincard">
+			<div class="name-rank">
+				<h3>Name:<span id="name">Select a Pokemon</span></h3>
+				<h4>Rank:<span id="rank">0</span></h4>
+				<h5>Height:<span id="height">0</span></h5>
+				<h6>Weight:<span id="weight">0</span></h6>
+			</div>
+			<div class="attributes">
+				<p>HP:<span id="hp">0</span></p>
+				<p>Attack:<span id="attack">0</span></p>
+				<p>Defense:<span id="defense">0</span></p>
+				<p>Special Attack:<span id="sattack">0</span></p>
+				<p>Special Defense:<span id="sdefense">0</span></p>
+				<p>Speed:<span id="speed">0</span></p>
+			</div>
+			<div class="main-img">
+				<img src="static/img/251.png" id="url" alt="" />
+			</div>
+		</div>
+	</section>
 	<section class="card-list">
 		{% for i in list%}
-		<div class="card">
+		<div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
 			<div class="card-author">
 				<a href="#" class="author-avatar">
 					<img src={{i.url}}></a>
 			</div>
 			<header class="card-header">
-				<h2>{{i.name}}</h2>
+				<h2 id="name">{{i.name}}</h2>
 				<p>Rank:{{i.rank}}</p>
 			</header>
 		</div>
 		{%endfor%}
 	</section>
+
+	<script type="text/javascript">
+		var list = {{list_json|safe}};
+		// selectItems
+		let name = document.getElementById("name");
+		let rank = document.getElementById("rank");
+		let height = document.getElementById("height");
+		let weight = document.getElementById("weight");
+		let hp = document.getElementById("hp");
+		let attack = document.getElementById("attack");
+		let defense = document.getElementById("defense");
+		let sattack = document.getElementById("sattack");
+		let sdefense = document.getElementById("sdefense");
+		let speed = document.getElementById("speed");
+		let url = document.getElementById("url");
+		let card = document.querySelector(".card-header");
+		function getData(id){
+				for(i=0;i<=20;i++){
+					if (list[i][0]==id){
+						name.textContent=list[i][1];
+						rank.textContent=list[i][0];
+						height.textContent=list[i][2];
+						weight.textContent=list[i][3];
+						hp.textContent=list[i][4];
+						attack.textContent=list[i][5];
+						defense.textContent=list[i][6];
+						sattack.textContent=list[i][7];
+						sdefense.textContent=list[i][8];
+						speed.textContent=list[i][9];
+						url.src =list[i][10];
+					}
+				}
+		}
+		function refresh(id){
+			let array = getData(id)
+		}
+	</script>
 </body>
 </html>

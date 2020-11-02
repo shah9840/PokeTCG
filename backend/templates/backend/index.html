@@ -11,7 +11,7 @@
 	<h1>Pokemon gO`</h1>
 	<section class="card-list">
 		{% for i in list%}
-		<article class="card">
+		<div class="card">
 			<div class="card-author">
 				<a href="#" class="author-avatar">
 					<img src={{i.url}}></a>
@@ -19,7 +19,8 @@
 			<header class="card-header">
 				<h2>{{i.name}}</h2>
 				<p>Rank:{{i.rank}}</p>
-				</header>
+			</header>
+		</div>
 		{%endfor%}
 	</section>
 </body>

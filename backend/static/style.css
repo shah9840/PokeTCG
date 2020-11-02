@@ -3,16 +3,16 @@
 body{
 	padding:0;
 	margin:0;
-	background-color:#1FDED5;
+	background-color:#0e1113;
 	color:white;
 	font-family:'DM Mono',monospace;
 	text-align:center;
 }
 h2{
-	color:blue;
+	color:#b8c9d2;
 }
 p{
-	color:red;
+	color:#a3c070;
 }
 h1{
 	margin-top:0px;
@@ -26,22 +26,23 @@ h1{
 }
 
 .card-list{
+	position: absolute;
+	bottom:0px;
+	left:0px;
 	display:flex;
-	/* padding:3rem; */
+	padding:3rem;
 	overflow-x:scroll;
 }
 .card{
 	display:flex;
 	position:relative;
 	flex-direction:column;
-	margin-top:250px;
-	height:350px;
-	width:400px;
-	min-width:250px;
+	height:50%;
+	width:25%;
 	padding:1.5rem;
 
 	border-radius:16px;
-	background:linear-gradient(to right,red,green);
+	background:#202528;
 	box-shadow: -1rem 0 3rem #000;
 	transition:.2s;
 }
@@ -68,5 +69,5 @@ h1{
 	margin-left:-130px;
 }
 img{
-	width: 40%;
+	width: 50%;
 }

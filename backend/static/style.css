@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
+
+body{
+	padding:0;
+	margin:0;
+	background-color:#1FDED5;
+	color:white;
+	font-family:'DM Mono',monospace;
+	text-align:center;
+}
+h2{
+	color:blue;
+}
+p{
+	color:red;
+}
+h1{
+	margin-top:0px;
+	color:red;
+	width:20%;
+	height:50px;
+	position:relative;
+	margin:auto;
+	background-color:lightgrey;
+	border-radius:5px;
+}
+
+.card-list{
+	display:flex;
+	/* padding:3rem; */
+	overflow-x:scroll;
+}
+.card{
+	display:flex;
+	position:relative;
+	flex-direction:column;
+	margin-top:250px;
+	height:350px;
+	width:400px;
+	min-width:250px;
+	padding:1.5rem;
+
+	border-radius:16px;
+	background:linear-gradient(to right,red,green);
+	box-shadow: -1rem 0 3rem #000;
+	transition:.2s;
+}
+.card-list::-webkit-scrollbar{
+	width:10px;
+	height:10px;
+}
+.card-list::-webkit-scrollbar-thumb{
+	background:grey;/*#201c29;*/
+	border-radius:10px;
+	box-shadow:inlet 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25);
+}
+.card-list::-webkit-scrollbar-track{
+	background:linear-gradient(90deg,#201c29,#201c29,1px,#17141d 0,#17141d);
+}
+.card:hover{
+	transform:translateY(-1rem);
+}
+.card:hover~.card{
+	transform:translateX(130px);
+}
+
+.card:not(:first-child){
+	margin-left:-130px;
+}
+img{
+	width: 40%;
+}

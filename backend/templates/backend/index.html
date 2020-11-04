@@ -92,6 +92,8 @@
 				enemy_name.textContent = enemy_list[enemy_stack][1];
 				enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
 				enemy_stack++;
+				var rc = document.getElementById("destroy");
+				rc.parentNode.removeChild(rc);
 			}
 			function refresh(id){
 				for(i=0;i<21;i++){
@@ -107,13 +109,10 @@
 						sdefense.textContent=list[i][8];
 						speed.textContent=list[i][9];
 						url.src =list[i][10];
+						document.getElementById(id).id="destroy";
 						break;
 					}
 				}
-				var el = document.getElementById(id);
-				el.parentNode.removeChild(el);
-
-				
 			}
 		</script>
 	</body>

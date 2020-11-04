@@ -102,6 +102,7 @@ p{color:#a3c070;
 }
 .card:hover{
 	transform:translateY(-1rem);
+	cursor: pointer;
 }
 .card:hover~.card{
 	transform:translateX(130px);

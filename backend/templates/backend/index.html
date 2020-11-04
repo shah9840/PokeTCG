@@ -13,7 +13,7 @@
 			<div class="main-card" id="maincard">
 				<div class="name-rank">
 					<div class="row1">
-						<p>Name:<span id="name">Select a Pokemon</span></p>
+						<p>Name:<span id="name">Pokemon</span></p>
 						<p>Rank:<span id="rank">0</span></p>
 					</div>
 					<div class="row2">
@@ -34,8 +34,9 @@
 					</div>
 				</div>
 			</div>
-			<img src="static/img/251.png" id="url"/>
+			<img src="static/img/pokeball.png" id="url"/>
 		</section>
+			<img src="static/img/pokeball.png" id="enemy_url"/>
 		<section class="card-list">
 			{% for i in list%}
 			<div class="card" id="{{i.rank}}" onclick="refresh(this.id)">

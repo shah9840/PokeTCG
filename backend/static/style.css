@@ -23,6 +23,10 @@ body{
 	vertical-align: middle;
 	width: 39%;
 }
+#enemy_url{
+	float: right;
+	width: 20%;
+}
 .row1{
 	border-bottom: solid;
 	border-right: solid;

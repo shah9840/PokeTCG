@@ -6,13 +6,22 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "poke.db")
 
 import random
+r = []
+o = []
 def randno():
-    r=[]
     while(len(r)<=20):
         z=random.randrange(1,252)
         if(z not in r): # and z not in a and z not in b):
             r.append(z)
     return r
+
+def oppnent_random():
+    while len(o)<=20:
+        z = random.randrange(1, 252)
+        if z not in o and z not in r:
+            o.append(z)
+    return o
+
 
 def getPoke(num):
     with sqlite3.connect('backend/poke.db') as conn:
@@ -47,6 +56,17 @@ def getobjects():
     pokearray = []
     # x=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
     for i in randno():
+        tempobj = Pokedex(i)
+        pokearray.append(tempobj)
+        pokearray_json.append(tempobj.to_list())
+    return pokearray,pokearray_json
+
+
+def getobjects_of_opponent():
+    pokearray_json= []
+    pokearray = []
+    # x=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    for i in oppnent_random():
         tempobj = Pokedex(i)
         pokearray.append(tempobj)
         pokearray_json.append(tempobj.to_list())

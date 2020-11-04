@@ -24,8 +24,12 @@ body{
 	width: 39%;
 }
 #enemy_url{
+	width: 50%;
+}
+.enemy{
 	float: right;
-	width: 20%;
+	width: 39%;
+	height: 50%;
 }
 .row1{
 	border-bottom: solid;

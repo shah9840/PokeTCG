@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport",content="width=device-width,initial-scale=1">
-		<title>Document</title>
+		<title>Let the Battle Begin!!</title>
 		<link rel="stylesheet" type="text/css" href="static/style.css">
 
 	</head>
@@ -34,9 +34,12 @@
 					</div>
 				</div>
 			</div>
-			<img src="static/img/pokeball.png" id="url"/>
+				<img src="static/img/pokeball.png" id="url"/>
 		</section>
+		<div class="enemy">
 			<img src="static/img/pokeball.png" id="enemy_url"/>
+			<p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+		</div>
 		<section class="card-list">
 			{% for i in list%}
 			<div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
@@ -54,6 +57,8 @@
 
 		<script type="text/javascript">
 			var list = {{list_json|safe}};
+			var enemy_list = {{list_json|safe}};
+			// selectEnemyItems
 			// selectItems
 			let name = document.getElementById("name");
 			let rank = document.getElementById("rank");

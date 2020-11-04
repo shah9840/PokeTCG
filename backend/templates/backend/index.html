@@ -23,14 +23,14 @@
 				</div>
 				<div class="attributes">
 					<div class="rowa">
-						<p onClick="compare(this,hp)">HP:<span id="hp">0</span></p>
-						<p onClick="compare(this,attack)">Attack:<span id="attack">0</span></p>
-						<p onClick="compare(this,defense)">Defense:<span id="defense">0</span></p>
+						<p onClick="compare(hp)">HP:<span id="hp">0</span></p>
+						<p onClick="compare(attack)">Attack:<span id="attack">0</span></p>
+						<p onClick="compare(defense)">Defense:<span id="defense">0</span></p>
 					</div>
 					<div class="rowb">
-						<p onClick="compare(this,speed)">Speed:<span id="speed">0</span></p>
-						<p onClick="compare(this,sattack)">Special Attack:<span id="sattack">0</span></p>
-						<p onClick="compare(this,sdefense)">Special Defense:<span id="sdefense">0</span></p>
+						<p onClick="compare(speed)">Speed:<span id="speed">0</span></p>
+						<p onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></p>
+						<p onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></p>
 					</div>
 				</div>
 			</div>
@@ -38,6 +38,7 @@
 		</section>
 		<div class="enemy">
 			<img src="static/img/pokeball.png" id="enemy_url"/>
+			<p> Name:<span id="enemy_name">Pokemon</span></p>
 			<p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
 		</div>
 		<section class="card-list">
@@ -59,7 +60,12 @@
 			var list = {{list_json|safe}};
 			var enemy_list = {{list_json|safe}};
 			// selectEnemyItems
+			let enemyAttr = document.getElementById("selectedAttr");
+			let enemy_url = document.getElementById("enemy_url");
+			let enemy_name = document.getElementById("enemy_name");
+			let enemy_stack = 0;
 			// selectItems
+			let arr_attr = ["hp","attack","defense","sattack","sdefense","speed"];
 			let name = document.getElementById("name");
 			let rank = document.getElementById("rank");
 			let height = document.getElementById("height");
@@ -72,8 +78,23 @@
 			let speed = document.getElementById("speed");
 			let url = document.getElementById("url");
 			let card = document.querySelector(".card-header");
+			function compare(attr){
+				let sel_id = attr.id;
+				let sel_content = attr.innerHTML;
+				let attr_id = 9;
+				for(i=0;i<6;i++){
+					if (sel_id == arr_attr[i]){
+						attr_id = 4+i;
+						break;
+					}
+				}
+				enemy_url.src = enemy_list[enemy_stack][10];
+				enemy_name.textContent = enemy_list[enemy_stack][1];
+				enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+				enemy_stack++;
+			}
 			function refresh(id){
-				for(i=0;i<=20;i++){
+				for(i=0;i<21;i++){
 					if (list[i][0]==id){
 						name.textContent=list[i][1];
 						rank.textContent=list[i][0];
@@ -86,8 +107,13 @@
 						sdefense.textContent=list[i][8];
 						speed.textContent=list[i][9];
 						url.src =list[i][10];
+						break;
 					}
 				}
+				var el = document.getElementById(id);
+				el.parentNode.removeChild(el);
+
+				
 			}
 		</script>
 	</body>

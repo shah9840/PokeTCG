@@ -2,6 +2,8 @@
 import sqlite3
 import os.path
 import json
+from datetime import datetime
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "poke.db")
 
@@ -10,6 +12,7 @@ r = []
 o = []
 def randno():
     while(len(r)<=20):
+        random.seed(datetime.now())
         z=random.randrange(1,252)
         if(z not in r): # and z not in a and z not in b):
             r.append(z)
@@ -17,6 +20,7 @@ def randno():
 
 def oppnent_random():
     while len(o)<=20:
+        random.seed(datetime.now())
         z = random.randrange(1, 252)
         if z not in o and z not in r:
             o.append(z)

@@ -10,15 +10,29 @@ body{
 	text-align:center;
 }
 .main{
+	margin-top: 5px;
 	width: 60%;
 	position: absolute;
 }
 .main-card{
-	border-style: inset;
+/*	border-style: inset;
 	border-radius: 2px;
-	width: 50%;
+	width: 50%;*/
+	margin-top: 40px;
 	float:left;
+	display: flex;
+	width: 60%;
+	flex-direction: row;
 }
+
+.name-rank {
+	border: 8px solid red;
+	background-color: purple;
+	font-weight: 150%;
+	border-radius: 25px;
+	width: 80%;
+}
+
 #url{
 	align-content: center;
 	vertical-align: middle;
@@ -34,7 +48,7 @@ body{
 	width: 39%;
 	height: 50%;
 }
-.row1{
+/*.row1{
 	border-bottom: solid;
 	border-right: solid;
 	width: 59%;
@@ -44,14 +58,33 @@ body{
 	border-bottom: solid;
 	width:39%;
 	float: right;
-}
-.rowa{
+}*/
+/*.rowa{
 	width:59%;
 	float:left;
 }
 .rowb{
 	width:39%;
 	float:right;
+}*/
+
+.attributes {
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+}
+
+button {
+	margin-bottom: 20px;
+	margin-left: 20px;
+	margin-right: 40px;
+	height: 45px;
+	width: 95px;
+	color: white;
+	background-color: red;
+}
+
+.rowa > button {
+	background-color: blue;
 }
 
 h2{

@@ -3,8 +3,9 @@
 }
 
 body {
-	background-image: url("wall.jpg");
+    background-image: url("https://www.pogofindlay.com/wp-content/uploads/2020/06/unnamed.jpg");
 	background-size: cover;
+    background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -109,8 +109,20 @@ def createAccount():
 
 
 
-def admin():
+def addToCard():
     print("Select user:")
     x= input()
-    addCards(x,oppnent_random())
+    addCards(x,oppnent_random(x))
     print("Cards Successfully added")
+
+def admin():
+    print("1. Create Account:")
+    print("2. Add cards")
+    i = int(input())
+    if (i == 1):
+        createAccount()
+    elif (i==2):
+        addToCard()
+    else:
+        print("Select valid option. Exiting....")
+

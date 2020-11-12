@@ -3,8 +3,8 @@
 }
 
 body {
-	image:;
-	color: white;
+	background-image: url("wall.jpg");
+	background-size: cover;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -75,8 +75,8 @@ button.ghost {
 form {
 	background-color: #FFFFFF;
 	display: flex;
-	align-items: center;
-	justify-content: center;
+	align-items: left;
+	justify-content: left;
 	flex-direction: column;
 	padding: 0 50px;
 	height: 100%;

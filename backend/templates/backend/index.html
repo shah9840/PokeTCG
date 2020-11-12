@@ -52,120 +52,120 @@
                             <h2 id="name">{{i.name}}</h2>
                             <p>Rank:{{i.rank}}</p>
                         </header>
-        </section>
-        <div class="enemy">
-            <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
-            <p> Name:<span id="enemy_name">Pokemon</span></p>
-            <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
-            <p>Enemy's Points :<span id= "enemy_points">0</span></p>
-        </div>
-        <section class="card-list">
-            {% for i in list%}
-                <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
-                    <div class="card-author">
-                        <a href="#" class="author-avatar">
-                            <img src={{i.url}}></a>
-                    </div>
+            </section>
+            <div class="enemy">
+                <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
+                <p> Name:<span id="enemy_name">Pokemon</span></p>
+                <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+                <p>Enemy's Points :<span id= "enemy_points">0</span></p>
+            </div>
+            <section class="card-list">
+                {% for i in list%}
+                    <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
+                        <div class="card-author">
+                            <a href="#" class="author-avatar">
+                                <img src={{i.url}}></a>
+                        </div>
                 {%endfor%}
             </section>
-        </div>
+                    </div>
 
-        <script type="text/javascript">
-         var list = {{list_json|safe}};
-         var enemy_list = {{opplist_json|safe}};
-         var tempId;
-         // selectEnemyItems
-         let enemyAttr = document.getElementById("selectedAttr");
-         let enemy_url = document.getElementById("enemy_url");
-         let enemy_name = document.getElementById("enemy_name");
-         let enemy_stack = 0;
-         // selectItems
-         let arr_attr = ["hp","attack","defense","sattack","sdefense","speed"];
-         let name = document.getElementById("name");
-         let rank = document.getElementById("rank");
-         let height = document.getElementById("height");
-         let weight = document.getElementById("weight");
-         let hp = document.getElementById("hp");
-         let attack = document.getElementById("attack");
-         let defense = document.getElementById("defense");
-         let sattack = document.getElementById("sattack");
-         let sdefense = document.getElementById("sdefense");
-         let speed = document.getElementById("speed");
-         let url = document.getElementById("url");
-         let card = document.querySelector(".card-header");
-       	 // let enemy_points = document.getElementById("enemy_points")
+                    <script type="text/javascript">
+                     var list = {{list_json|safe}};
+                     var enemy_list = {{opplist_json|safe}};
+                     var tempId;
+                     // selectEnemyItems
+                     let enemyAttr = document.getElementById("selectedAttr");
+                     let enemy_url = document.getElementById("enemy_url");
+                     let enemy_name = document.getElementById("enemy_name");
+                     let enemy_stack = 0;
+                     // selectItems
+                     let arr_attr = ["hp","attack","defense","sattack","sdefense","speed"];
+                     let name = document.getElementById("name");
+                     let rank = document.getElementById("rank");
+                     let height = document.getElementById("height");
+                     let weight = document.getElementById("weight");
+                     let hp = document.getElementById("hp");
+                     let attack = document.getElementById("attack");
+                     let defense = document.getElementById("defense");
+                     let sattack = document.getElementById("sattack");
+                     let sdefense = document.getElementById("sdefense");
+                     let speed = document.getElementById("speed");
+                     let url = document.getElementById("url");
+                     let card = document.querySelector(".card-header");
+                     // let enemy_points = document.getElementById("enemy_points")
 
-         let array = []
-         let player_point = 0
-         let enemy_point = 0
-         function compare(attr){
-             let sel_id = attr.id;
-             let sel_content = attr.innerHTML;
-             let attr_id = 9;
-             for(i=0;i<6;i++){
-                 if (sel_id == arr_attr[i]){
-                     attr_id = 4+i;
-                     break;
-                 }
-             }
-             enemy_url.src = enemy_list[enemy_stack][10];
-             enemy_name.textContent = enemy_list[enemy_stack][1];
-             enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
-             let numberTxt = sel_id.value;
-    		 let number = parseInt(numberTxt,10);
-             if (enemy_list[enemy_stack][attr_id] > number) {
-             	array.push(0)
-             	enemy_point += 1
-             	enemy_points.textContent = enemy_point
-             }
-             else {
-             	array.push(1)
-             	player_point += 1
-             }
-             enemy_stack++;
-             var rc = document.getElementById("destroy");
-             rc.parentNode.removeChild(rc);
-         }
-         function refresh(id){
-             if (document.getElementById("destroy") != null){
-                 document.getElementById("destroy").id = tempId;
-             }
-             for(i=0;i<21;i++){
-                 if (list[i][0]==id){
-                     name.textContent=list[i][1];
-                     rank.textContent=list[i][0];
-                     height.textContent=list[i][2];
-                     weight.textContent=list[i][3];
-                     hp.textContent=list[i][4];
-                     attack.textContent=list[i][5];
-                     defense.textContent=list[i][6];
-                     sattack.textContent=list[i][7];
-                     sdefense.textContent=list[i][8];
-                     speed.textContent=list[i][9];
-                     url.src =list[i][10];
-                     document.getElementById(id).id="destroy";
-                     tempId = id;
-                     break;
-                 }
-             }
-             postreq();
-         }
-         function postreq(){
-             $.ajax({
-                 type: 'POST',
-                 data: {
-                     "csrfmiddlewaretoken" : document.getElementsByTagName("input")[0].value,
-                     name: "Hello"},
-                 success: function (response) {
-                     return
-                 },
-                 error: function (response) {
-                     // alert the error if any error occured
-                     console.log("posterror")
-                 }
-             })
-         }
+                     let array = []
+                     let player_point = 0
+                     let enemy_point = 0
+                     function compare(attr){
+                         let sel_id = attr.id;
+                         let sel_content = attr.innerHTML;
+                         let attr_id = 9;
+                         for(i=0;i<6;i++){
+                             if (sel_id == arr_attr[i]){
+                                 attr_id = 4+i;
+                                 break;
+                             }
+                         }
+                         enemy_url.src = enemy_list[enemy_stack][10];
+                         enemy_name.textContent = enemy_list[enemy_stack][1];
+                         enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+                         let numberTxt = sel_id.value;
+                         let number = parseInt(numberTxt,10);
+                         if (enemy_list[enemy_stack][attr_id] > number) {
+                             array.push(0)
+                             enemy_point += 1
+                             enemy_points.textContent = enemy_point
+                         }
+                         else {
+                             array.push(1)
+                             player_point += 1
+                         }
+                         enemy_stack++;
+                         var rc = document.getElementById("destroy");
+                         rc.parentNode.removeChild(rc);
+                     }
+                     function refresh(id){
+                         if (document.getElementById("destroy") != null){
+                             document.getElementById("destroy").id = tempId;
+                         }
+                         for(i=0;i<21;i++){
+                             if (list[i][0]==id){
+                                 name.textContent=list[i][1];
+                                 rank.textContent=list[i][0];
+                                 height.textContent=list[i][2];
+                                 weight.textContent=list[i][3];
+                                 hp.textContent=list[i][4];
+                                 attack.textContent=list[i][5];
+                                 defense.textContent=list[i][6];
+                                 sattack.textContent=list[i][7];
+                                 sdefense.textContent=list[i][8];
+                                 speed.textContent=list[i][9];
+                                 url.src =list[i][10];
+                                 document.getElementById(id).id="destroy";
+                                 tempId = id;
+                                 break;
+                             }
+                         }
+                         postreq();
+                     }
+                     function postreq(){
+                         $.ajax({
+                             type: 'POST',
+                             data: {
+                                 "csrfmiddlewaretoken" : document.getElementsByTagName("input")[0].value,
+                                 name: "Hello"},
+                             success: function (response) {
+                                 return
+                             },
+                             error: function (response) {
+                                 // alert the error if any error occured
+                                 console.log("posterror")
+                             }
+                         })
+                     }
 
-        </script>
+                    </script>
     </body>
 </html>

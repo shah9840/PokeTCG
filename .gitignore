@@ -1,3 +1,4 @@
 /PokeTCG/__pycache__/*.pyc
 /backend/__pycache__/*.pyc
 *.png
+/*.sqlite3

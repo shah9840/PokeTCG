@@ -7,6 +7,6 @@ from . import views
 app_name = 'backend'  # here for namespacing of urls.
 
 urlpatterns = [
-    path('',views.login,name="login"),
-    path('battle', views.homepage, name="homepage"),
+    path('',views.tcg.login,name='login'),
+    path('battle/', views.tcg.battle, name='battle')
 ]

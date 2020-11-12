@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono&display=swap');
 
 body{
+	overflow: hidden;
 	padding:0;
 	margin:0;
 	background-color:#0e1113;
@@ -22,6 +23,8 @@ body{
 	align-content: center;
 	vertical-align: middle;
 	width: 39%;
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
 }
 #enemy_url{
 	width: 50%;
@@ -73,7 +76,7 @@ p{color:#a3c070;
 	left:0px;
 	display:flex;
 	padding:3rem;
-	overflow-x:scroll;
+	overflow-x:hidden;
 }
 .card{
 	display:flex;
@@ -95,13 +98,14 @@ p{color:#a3c070;
 .card-list::-webkit-scrollbar-thumb{
 	background:grey;/*#201c29;*/
 	border-radius:10px;
-	box-shadow:inlet 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25);
+	/* box-shadow:inlet 2px 2px 2px hsla(0,0%,100%,.25),inset -2px -2px 2px rgba(0,0,0,.25); */
 }
 .card-list::-webkit-scrollbar-track{
 	background:linear-gradient(90deg,#201c29,#201c29,1px,#17141d 0,#17141d);
 }
 .card:hover{
 	transform:translateY(-1rem);
+	cursor: pointer;
 }
 .card:hover~.card{
 	transform:translateX(130px);

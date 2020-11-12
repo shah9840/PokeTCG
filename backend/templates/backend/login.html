@@ -2,45 +2,25 @@
 {% load static %}
 
 
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-	<link rel="stylesheet" type="text/css" href="static/login.css">
-	<script src="login.js"></script>
-</head>
-<body>
-	<!-- {% block content %} -->
-    <!-- <div class="container">
-        <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-            <button style="background-color:#F4EB16; color:blue" class="btn btn-outline-info" type="submit">Login</button>
-        </form>
-        Don't have an account? <a href="/register" target="blank"><strong>register here</strong></a>!
-    </div> -->
-<!-- {% endblock %} -->
-
-<div class="form-structure">
-	<div class="signup">
-		<h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
-		<div class="form-holder">
-			<input type="text" class="input" placeholder="Name" />
-			<input type="email" class="input" placeholder="Email" />
-			<input type="password" class="input" placeholder="Password" />
-		</div>
-		<button class="submit-btn">Sign up</button>
-	</div>
-	<div class="login slide-up">
-		<div class="center">
-			<h2 class="form-title" id="login"><span>or</span>Log in</h2>
-			<div class="form-holder">
-				<input type="email" class="input" placeholder="Email" />
-				<input type="password" class="input" placeholder="Password" />
+	<head>
+		<link rel="stylesheet" type="text/css" href="static/login.css">
+		<!-- <script src="login.js"></script> -->
+	</head>
+	<body>
+		{% block content %}
+			<div class="mainlayer">
+				<h1>Welcome!</h1>
+				<form method="post">
+					{% csrf_token %}
+					<label for="username">Username: </label>
+					<input type="text" name="username" value="" />
+					<label for="password">Password: </label>
+					<input type="password" name="password" value="" />
+					<button type="submit">Log In</button>
+				</form>
 			</div>
-			<button class="submit-btn">Log in</button>
-		</div>
-	</div>
-</div>
-</body>
+		{% endblock %}
+	</body>
 </html>

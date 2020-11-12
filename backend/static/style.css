@@ -31,6 +31,12 @@ html,body{
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
 }
+
+#usr{
+	grid-row: 3 / 4;
+	grid-column: 1 / 3;
+}
+
 #enemy_url{
 	width: 70%;
 }

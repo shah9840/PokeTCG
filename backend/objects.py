@@ -2,27 +2,19 @@
 import sqlite3
 import os.path
 import json
+import random
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "poke.db")
 
-import random
-r = []
-o = []
-def randno():
-    while(len(r)<=20):
-        random.seed(datetime.now())
-        z=random.randrange(1,252)
-        if(z not in r): # and z not in a and z not in b):
-            r.append(z)
-    return r
-
-def oppnent_random():
+def oppnent_random(user):
+    no = getRandomPoke(user)
+    o=[]
     while len(o)<=20:
         random.seed(datetime.now())
         z = random.randrange(1, 252)
-        if z not in o and z not in r:
+        if z not in o and z not in no:
             o.append(z)
     return o
 
@@ -30,7 +22,7 @@ def oppnent_random():
 def getPoke(num):
     with sqlite3.connect('backend/poke.db') as conn:
         c = conn.cursor()
-        c.execute('''SELECT * FROM pokedex where Rank = ?''',[num])
+        c.execute("SELECT * FROM pokedex where Rank = ?", (num,))
         obj = list(dict.fromkeys(c.fetchall()))
     return obj[0]
 
@@ -55,23 +47,70 @@ class Pokedex():
         return lists
 
 
-def getobjects():
+def getobjects(user):
     pokearray_json= []
     pokearray = []
-    # x=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-    for i in randno():
-        tempobj = Pokedex(i)
+    arr = getRandomPoke(user)[:20]
+    for i in arr:
+        tempobj = Pokedex(i[0])
         pokearray.append(tempobj)
         pokearray_json.append(tempobj.to_list())
     return pokearray,pokearray_json
 
 
-def getobjects_of_opponent():
+def getobjects_of_opponent(user):
     pokearray_json= []
     pokearray = []
-    # x=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-    for i in oppnent_random():
+    for i in oppnent_random(user):
         tempobj = Pokedex(i)
         pokearray.append(tempobj)
         pokearray_json.append(tempobj.to_list())
     return pokearray,pokearray_json
+
+def checkAcc(username,password):
+    with sqlite3.connect('backend/poke.db') as conn:
+        c = conn.cursor()
+        c.execute('''SELECT password FROM accounts where name = ? AND pokeId = 0''',[username])
+        key = c.fetchall()
+        try:
+            if (key[0][0] == password):
+                print("checkAcc success")
+                return True
+        except:
+            return False
+
+
+def addCards(username,arr):
+    with sqlite3.connect('poke.db') as conn:
+        c = conn.cursor()
+        for i in arr:
+            c.execute('''INSERT INTO accounts(name,password,pokeId) VALUES (?,"Me nahi bataunga",?)''',[username,i])
+        conn.commit()
+
+def getRandomPoke(user):
+    with sqlite3.connect('backend/poke.db') as conn:
+        c = conn.cursor()
+        c.execute('''SELECT pokeId FROM accounts WHERE name = ? AND pokeId != 0''',[user])
+        obj = list(dict.fromkeys(c.fetchall()))
+        random.shuffle(obj)
+
+    return (obj)
+
+def createAccount():
+    x=input("Username:")
+    y=input("Password:")
+    with sqlite3.connect('poke.db') as conn:
+        c = conn.cursor()
+        c.execute('''INSERT INTO accounts(name,password,pokeId) VALUES (?,?,0)''',[x,y,])
+        print("Account Created")
+        conn.commit()
+    addCards(x,opponent_random())
+    print("Added 20 Cards to get you started")
+
+
+
+def admin():
+    print("Select user:")
+    x= input()
+    addCards(x,oppnent_random())
+    print("Cards Successfully added")

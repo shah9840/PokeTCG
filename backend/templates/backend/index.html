@@ -1,119 +1,144 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport",content="width=device-width,initial-scale=1">
-		<title>Let the Battle Begin!!</title>
-		<link rel="stylesheet" type="text/css" href="static/style.css">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport",content="width=device-width,initial-scale=1">
+        <title>Let the Battle Begin!!</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 
-	</head>
-	<body>
-		<section class="main">
-			<div class="main-card" id="maincard">
-				<div class="name-rank">
-					<div class="row1">
-						<p>Name:<span id="name">Pokemon</span></p>
-						<p>Rank:<span id="rank">0</span></p>
-					</div>
-					<div class="row2">
-						<p>Height:<span id="height">0</span></p>
-						<p>Weight:<span id="weight">0</span></p>
-					</div>
-				</div>
-				<div class="attributes">
-					<div class="rowa">
-						<p onClick="compare(hp)">HP:<span id="hp">0</span></p>
-						<p onClick="compare(attack)">Attack:<span id="attack">0</span></p>
-						<p onClick="compare(defense)">Defense:<span id="defense">0</span></p>
-					</div>
-					<div class="rowb">
-						<p onClick="compare(speed)">Speed:<span id="speed">0</span></p>
-						<p onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></p>
-						<p onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></p>
-					</div>
-				</div>
-			</div>
-				<img src="static/img/pokeball.png" id="url"/>
-		</section>
-		<div class="enemy">
-			<img src="static/img/pokeball.png" id="enemy_url"/>
-			<p> Name:<span id="enemy_name">Pokemon</span></p>
-			<p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
-		</div>
-		<section class="card-list">
-			{% for i in list%}
-			<div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
-				<div class="card-author">
-					<a href="#" class="author-avatar">
-						<img src={{i.url}}></a>
-				</div>
-				<header class="card-header">
-					<h2 id="name">{{i.name}}</h2>
-					<p>Rank:{{i.rank}}</p>
-				</header>
-			</div>
-			{%endfor%}
-		</section>
+    </head>
+    <body>
+        <section class="main">
+            {% csrf_token %}
+            <div class="main-card" id="maincard">
+                <div class="name-rank">
+                    <div class="row1">
+                        <p>Name:<span id="name">Pokemon</span></p>
+                        <p>Rank:<span id="rank">0</span></p>
+                    </div>
+                    <div class="row2">
+                        <p>Height:<span id="height">0</span></p>
+                        <p>Weight:<span id="weight">0</span></p>
+                    </div>
+                </div>
+                <div class="attributes">
+                    <div class="rowa">
+                        <p onClick="compare(hp)">HP:<span id="hp">0</span></p>
+                        <p onClick="compare(attack)">Attack:<span id="attack">0</span></p>
+                        <p onClick="compare(defense)">Defense:<span id="defense">0</span></p>
+                    </div>
+                    <div class="rowb">
+                        <p onClick="compare(speed)">Speed:<span id="speed">0</span></p>
+                        <p onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></p>
+                        <p onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></p>
+                    </div>
+                </div>
+            </div>
+            <img src="{% static 'img/pokeball.png' %}" id="url"/>
+        </section>
+        <div class="enemy">
+            <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
+            <p> Name:<span id="enemy_name">Pokemon</span></p>
+            <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+        </div>
+        <section class="card-list">
+            {% for i in list%}
+                <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
+                    <div class="card-author">
+                        <a href="#" class="author-avatar">
+                            <img src={{i.url}}></a>
+                    </div>
+                    <header class="card-header">
+                        <h2 id="name">{{i.name}}</h2>
+                        <p>Rank:{{i.rank}}</p>
+                    </header>
+                </div>
+            {%endfor%}
+        </section>
 
-		<script type="text/javascript">
-			var list = {{list_json|safe}};
-			var enemy_list = {{opplist_json|safe}};
-			// selectEnemyItems
-			let enemyAttr = document.getElementById("selectedAttr");
-			let enemy_url = document.getElementById("enemy_url");
-			let enemy_name = document.getElementById("enemy_name");
-			let enemy_stack = 0;
-			// selectItems
-			let arr_attr = ["hp","attack","defense","sattack","sdefense","speed"];
-			let name = document.getElementById("name");
-			let rank = document.getElementById("rank");
-			let height = document.getElementById("height");
-			let weight = document.getElementById("weight");
-			let hp = document.getElementById("hp");
-			let attack = document.getElementById("attack");
-			let defense = document.getElementById("defense");
-			let sattack = document.getElementById("sattack");
-			let sdefense = document.getElementById("sdefense");
-			let speed = document.getElementById("speed");
-			let url = document.getElementById("url");
-			let card = document.querySelector(".card-header");
-			function compare(attr){
-				let sel_id = attr.id;
-				let sel_content = attr.innerHTML;
-				let attr_id = 9;
-				for(i=0;i<6;i++){
-					if (sel_id == arr_attr[i]){
-						attr_id = 4+i;
-						break;
-					}
-				}
-				enemy_url.src = enemy_list[enemy_stack][10];
-				enemy_name.textContent = enemy_list[enemy_stack][1];
-				enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
-				enemy_stack++;
-				var rc = document.getElementById("destroy");
-				rc.parentNode.removeChild(rc);
-			}
-			function refresh(id){
-				for(i=0;i<21;i++){
-					if (list[i][0]==id){
-						name.textContent=list[i][1];
-						rank.textContent=list[i][0];
-						height.textContent=list[i][2];
-						weight.textContent=list[i][3];
-						hp.textContent=list[i][4];
-						attack.textContent=list[i][5];
-						defense.textContent=list[i][6];
-						sattack.textContent=list[i][7];
-						sdefense.textContent=list[i][8];
-						speed.textContent=list[i][9];
-						url.src =list[i][10];
-						document.getElementById(id).id="destroy";
-						break;
-					}
-				}
-			}
-		</script>
-	</body>
+        <script type="text/javascript">
+         var list = {{list_json|safe}};
+         var enemy_list = {{opplist_json|safe}};
+         var tempId;
+         // selectEnemyItems
+         let enemyAttr = document.getElementById("selectedAttr");
+         let enemy_url = document.getElementById("enemy_url");
+         let enemy_name = document.getElementById("enemy_name");
+         let enemy_stack = 0;
+         // selectItems
+         let arr_attr = ["hp","attack","defense","sattack","sdefense","speed"];
+         let name = document.getElementById("name");
+         let rank = document.getElementById("rank");
+         let height = document.getElementById("height");
+         let weight = document.getElementById("weight");
+         let hp = document.getElementById("hp");
+         let attack = document.getElementById("attack");
+         let defense = document.getElementById("defense");
+         let sattack = document.getElementById("sattack");
+         let sdefense = document.getElementById("sdefense");
+         let speed = document.getElementById("speed");
+         let url = document.getElementById("url");
+         let card = document.querySelector(".card-header");
+         function compare(attr){
+             let sel_id = attr.id;
+             let sel_content = attr.innerHTML;
+             let attr_id = 9;
+             for(i=0;i<6;i++){
+                 if (sel_id == arr_attr[i]){
+                     attr_id = 4+i;
+                     break;
+                 }
+             }
+             enemy_url.src = enemy_list[enemy_stack][10];
+             enemy_name.textContent = enemy_list[enemy_stack][1];
+             enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+             enemy_stack++;
+             var rc = document.getElementById("destroy");
+             rc.parentNode.removeChild(rc);
+         }
+         function refresh(id){
+             if (document.getElementById("destroy") != null){
+                 document.getElementById("destroy").id = tempId;
+             }
+             for(i=0;i<21;i++){
+                 if (list[i][0]==id){
+                     name.textContent=list[i][1];
+                     rank.textContent=list[i][0];
+                     height.textContent=list[i][2];
+                     weight.textContent=list[i][3];
+                     hp.textContent=list[i][4];
+                     attack.textContent=list[i][5];
+                     defense.textContent=list[i][6];
+                     sattack.textContent=list[i][7];
+                     sdefense.textContent=list[i][8];
+                     speed.textContent=list[i][9];
+                     url.src =list[i][10];
+                     document.getElementById(id).id="destroy";
+                     tempId = id;
+                     break;
+                 }
+             }
+             postreq();
+         }
+         function postreq(){
+             $.ajax({
+                 type: 'POST',
+                 data: {
+                     "csrfmiddlewaretoken" : document.getElementsByTagName("input")[0].value,
+                     name:list},
+                 success: function (response) {
+                     return
+                 },
+                 error: function (response) {
+                     // alert the error if any error occured
+                     console.log("posterror")
+                 }
+             })
+         }
+
+        </script>
+    </body>
 </html>

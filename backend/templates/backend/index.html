@@ -36,6 +36,7 @@
                 </div>
             </div>
             <img src="{% static 'img/pokeball.png' %}" id="url"/>
+<<<<<<< HEAD
             <div class="enemy">
                 <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
                 <p> Name:<span id="enemy_name">Pokemon</span></p>
@@ -52,6 +53,21 @@
                             <h2 id="name">{{i.name}}</h2>
                             <p>Rank:{{i.rank}}</p>
                         </header>
+=======
+        </section>
+        <div class="enemy">
+            <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
+            <p> Name:<span id="enemy_name">Pokemon</span></p>
+            <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+            <p>Enemy's Points :<span id= "enemy_points">0</span></p>
+        </div>
+        <section class="card-list">
+            {% for i in list%}
+                <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
+                    <div class="card-author">
+                        <a href="#" class="author-avatar">
+                            <img src={{i.url}}></a>
+>>>>>>> ed127586eb750dfb92efd28fe3ae2afa85ec5071
                     </div>
                 {%endfor%}
             </section>
@@ -80,6 +96,11 @@
          let speed = document.getElementById("speed");
          let url = document.getElementById("url");
          let card = document.querySelector(".card-header");
+       	 // let enemy_points = document.getElementById("enemy_points")
+
+         let array = []
+         let player_point = 0
+         let enemy_point = 0
          function compare(attr){
              let sel_id = attr.id;
              let sel_content = attr.innerHTML;
@@ -93,6 +114,17 @@
              enemy_url.src = enemy_list[enemy_stack][10];
              enemy_name.textContent = enemy_list[enemy_stack][1];
              enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+             let numberTxt = sel_id.value;
+    		 let number = parseInt(numberTxt,10);
+             if (enemy_list[enemy_stack][attr_id] > number) {
+             	array.push(0)
+             	enemy_point += 1
+             	enemy_points.textContent = enemy_point
+             }
+             else {
+             	array.push(1)
+             	player_point += 1
+             }
              enemy_stack++;
              var rc = document.getElementById("destroy");
              rc.parentNode.removeChild(rc);

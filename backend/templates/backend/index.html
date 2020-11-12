@@ -40,6 +40,7 @@
                 <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
                 <p> Name:<span id="enemy_name">Pokemon</span></p>
                 <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+                <p>Enemy's Points :<span id= "enemy_points">0</span></p>
             </div>
             <section class="card-list">
                 {% for i in list%}
@@ -52,20 +53,7 @@
                             <h2 id="name">{{i.name}}</h2>
                             <p>Rank:{{i.rank}}</p>
                         </header>
-            </section>
-            <div class="enemy">
-                <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
-                <p> Name:<span id="enemy_name">Pokemon</span></p>
-                <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
-                <p>Enemy's Points :<span id= "enemy_points">0</span></p>
-            </div>
-            <section class="card-list">
-                {% for i in list%}
-                    <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
-                        <div class="card-author">
-                            <a href="#" class="author-avatar">
-                                <img src={{i.url}}></a>
-                        </div>
+                    </div>
                 {%endfor%}
             </section>
                     </div>

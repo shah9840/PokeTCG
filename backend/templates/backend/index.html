@@ -11,53 +11,51 @@
 
     </head>
     <body>
-        <section class="main">
+        <div class="complete">
             {% csrf_token %}
-            <div class="main-card" id="maincard">
-                <div class="name-rank">
-                    <div class="row1">
-                        <p>Name:<span id="name">Pokemon</span></p>
-                        <p>Rank:<span id="rank">0</span></p>
-                    </div> 
-                    <div class="row2">
-                        <p>Height:<span id="height">0</span></p>
-                        <p>Weight:<span id="weight">0</span></p>
-                    </div>
+            <div class="name-rank">
+                <div class="row1">
+                    <p>Name:<span id="name">Pokemon</span></p>
+                    <p>Rank:<span id="rank">0</span></p>
                 </div>
-                <div class="attributes">
-                    <div class="rowa">
-                        <button onClick="compare(hp)">HP:<span id="hp">0</span></button>
-                        <button onClick="compare(attack)">Attack:<span id="attack">0</span></button>
-                        <button onClick="compare(defense)">Defense:<span id="defense">0</span></button>
-                    </div>
-                    <div class="rowb">
-                        <button onClick="compare(speed)">Speed:<span id="speed">0</span></button>
-                        <button onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></button>
-                        <button onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></button>
-                    </div>
+                <div class="row2">
+                    <p>Height:<span id="height">0</span></p>
+                    <p>Weight:<span id="weight">0</span></p>
+                </div>
+            </div>
+            <div class="attributes">
+                <div class="rowa">
+                    <button onClick="compare(hp)">HP:<span id="hp">0</span></button>
+                    <button onClick="compare(attack)">Attack:<span id="attack">0</span></button>
+                    <button onClick="compare(defense)">Defense:<span id="defense">0</span></button>
+                </div>
+                <div class="rowb">
+                    <button onClick="compare(speed)">Speed:<span id="speed">0</span></button>
+                    <button onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></button>
+                    <button onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></button>
                 </div>
             </div>
             <img src="{% static 'img/pokeball.png' %}" id="url"/>
-        </section>
-        <div class="enemy">
-            <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
-            <p> Name:<span id="enemy_name">Pokemon</span></p>
-            <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
-        </div>
-        <section class="card-list">
-            {% for i in list%}
-                <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
-                    <div class="card-author">
-                        <a href="#" class="author-avatar">
-                            <img src={{i.url}}></a>
+            <div class="enemy">
+                <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
+                <p> Name:<span id="enemy_name">Pokemon</span></p>
+                <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+            </div>
+            <section class="card-list">
+                {% for i in list%}
+                    <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
+                        <div class="card-author">
+                            <a href="#" class="author-avatar">
+                                <img src={{i.url}}></a>
+                        </div>
+                        <header class="card-header">
+                            <h2 id="name">{{i.name}}</h2>
+                            <p>Rank:{{i.rank}}</p>
+                        </header>
                     </div>
-                    <header class="card-header">
-                        <h2 id="name">{{i.name}}</h2>
-                        <p>Rank:{{i.rank}}</p>
-                    </header>
-                </div>
-            {%endfor%}
-        </section>
+                {%endfor%}
+            </section>
+        </div>
 
         <script type="text/javascript">
          var list = {{list_json|safe}};

@@ -12,7 +12,10 @@ class tcg:
         except:
                 user = None;
         if request.method == 'POST':
-            print(request.POST)
+            egg = dict(request.POST)
+            newPoke = egg.get('newPoke[]')
+            byePoke = egg.get('byePoke[]')
+
         if (user is not None):
             request.session.pop('user',None)
             request.session.modified = True

@@ -98,17 +98,15 @@
                              }
                          }
                          if (multaps == 0){
-                         enemy_url.src = enemy_list[enemy_stack][10];
-                         enemy_name.textContent = enemy_list[enemy_stack][1];
-                         enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+                             enemy_url.src = enemy_list[enemy_stack][10];
+                             enemy_name.textContent = enemy_list[enemy_stack][1];
+                             enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
                          }
                          else{
                              return
                          }
                          let number = document.getElementById(sel_id).textContent;
-                         console.log(number)
                          if (enemy_list[enemy_stack][attr_id] > number) {
-                             console.log(enemy_list[enemy_stack][attr_id])
                              array.push(0)
                              enemy_point += 1
                              enemy_points.textContent = enemy_point
@@ -119,6 +117,20 @@
                              usr_points.textContent = player_point
                          }
                          enemy_stack++;
+                         if (enemy_stack==20){
+                             let newPoke = []
+                             let byePoke = []
+                             for (i=0;i<20;i++){
+                                 if (array[i]==0){
+                                     byePoke.push(enemy_list[i][0])
+                                 }
+                                 else{
+                                     newPoke.push(list[i][0])
+                                 }
+                             }
+                             postreq(newPoke,byePoke)
+
+                         }
                          var rc = document.getElementById("destroy");
                          rc.parentNode.removeChild(rc);
                          multaps = 1;
@@ -146,14 +158,16 @@
                                  break;
                              }
                          }
-                         postreq();
                      }
-                     function postreq(){
+                     function postreq(x,y){
+                         console.log(x)
+                         console.log(y)
                          $.ajax({
                              type: 'POST',
                              data: {
                                  "csrfmiddlewaretoken" : document.getElementsByTagName("input")[0].value,
-                                 name: "Hello"},
+                                 newPoke: x,
+                                 byePoke: y},
                              success: function (response) {
                                  return
                              },

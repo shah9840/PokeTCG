@@ -28,8 +28,8 @@ html,body{
 	vertical-align: middle;
 	grid-row: 1 / 4;
 	width: 100%;
-	-webkit-transform: scaleX(-1);
-	transform: scaleX(-1);
+	/* -webkit-transform: scaleX(-1); */
+	/* transform: scaleX(-1); */
 }
 
 #usr{

@@ -11,54 +11,53 @@
 
     </head>
     <body>
-        <section class="main">
+        <div class="complete">
             {% csrf_token %}
-            <div class="main-card" id="maincard">
-                <div class="name-rank">
-                    <div class="row1">
-                        <p>Name:<span id="name">Pokemon</span></p>
-                        <p>Rank:<span id="rank">0</span></p>
-                    </div> 
-                    <div class="row2">
-                        <p>Height:<span id="height">0</span></p>
-                        <p>Weight:<span id="weight">0</span></p>
-                    </div>
+            <div class="name-rank">
+                <div class="row1">
+                    <p>Name:<span id="name">Pokemon</span></p>
+                    <p>Rank:<span id="rank">0</span></p>
                 </div>
-                <div class="attributes">
-                    <div class="rowa">
-                        <button onClick="compare(hp)">HP:<span id="hp">0</span></button>
-                        <button onClick="compare(attack)">Attack:<span id="attack">0</span></button>
-                        <button onClick="compare(defense)">Defense:<span id="defense">0</span></button>
-                    </div>
-                    <div class="rowb">
-                        <button onClick="compare(speed)">Speed:<span id="speed">0</span></button>
-                        <button onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></button>
-                        <button onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></button>
-                    </div>
+                <div class="row2">
+                    <p>Height:<span id="height">0</span></p>
+                    <p>Weight:<span id="weight">0</span></p>
                 </div>
             </div>
-            <img src="{% static 'img/pokeball.png' %}" id="url"/>
-        </section>
-        <div class="enemy">
-            <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
-            <p> Name:<span id="enemy_name">Pokemon</span></p>
-            <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
-            <p>Enemy's Points :<span id= "enemy_points">0</span></p>
-        </div>
-        <section class="card-list">
-            {% for i in list%}
-                <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
-                    <div class="card-author">
-                        <a href="#" class="author-avatar">
-                            <img src={{i.url}}></a>
-                    </div>
-                    <header class="card-header">
-                        <h2 id="name">{{i.name}}</h2>
-                        <p>Rank:{{i.rank}}</p>
-                    </header>
+            <div class="attributes">
+                <div class="rowa">
+                    <button onClick="compare(hp)">HP:<span id="hp">0</span></button>
+                    <button onClick="compare(attack)">Attack:<span id="attack">0</span></button>
+                    <button onClick="compare(defense)">Defense:<span id="defense">0</span></button>
                 </div>
-            {%endfor%}
-        </section>
+                <div class="rowb">
+                    <button onClick="compare(speed)">Speed:<span id="speed">0</span></button>
+                    <button onClick="compare(sattack)">Special Attack:<span id="sattack">0</span></button>
+                    <button onClick="compare(sdefense)">Special Defense:<span id="sdefense">0</span></button>
+                </div>
+            </div>
+            <p id="usr">User Points :<span id= "usr_points">0</span></p>
+            <img src="{% static 'img/pokeball.png' %}" id="url"/>
+            <div class="enemy">
+                <img src="{% static 'img/pokeball.png' %}" id="enemy_url"/>
+                <p> Name:<span id="enemy_name">Pokemon</span></p>
+                <p> Enemy's Attribute:<span id="selectedAttr">0</span></p>
+                <p>Enemy's Points :<span id= "enemy_points">0</span></p>
+            </div>
+            <section class="card-list">
+                {% for i in list%}
+                    <div class="card" id="{{i.rank}}" onclick="refresh(this.id)">
+                        <div class="card-author">
+                            <a class="author-avatar">
+                                <img src={{i.url}}></a>
+                        </div>
+                        <header class="card-header">
+                            <h2 id="name">{{i.name}}</h2>
+                            <p>Rank:{{i.rank}}</p>
+                        </header>
+                    </div>
+                {%endfor%}
+            </section>
+        </div>
 
         <script type="text/javascript">
          var list = {{list_json|safe}};
@@ -83,8 +82,8 @@
          let speed = document.getElementById("speed");
          let url = document.getElementById("url");
          let card = document.querySelector(".card-header");
-       	 // let enemy_points = document.getElementById("enemy_points")
-
+         let enemy_points = document.getElementById("enemy_points")
+         let multaps = 0;
          let array = []
          let player_point = 0
          let enemy_point = 0
@@ -98,28 +97,63 @@
                      break;
                  }
              }
-             enemy_url.src = enemy_list[enemy_stack][10];
-             enemy_name.textContent = enemy_list[enemy_stack][1];
-             enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
-             let numberTxt = sel_id.value;
-    		 let number = parseInt(numberTxt,10);
+             if (multaps == 0){
+                 enemy_url.src = enemy_list[enemy_stack][10];
+                 enemy_name.textContent = enemy_list[enemy_stack][1];
+                 enemyAttr.textContent = enemy_list[enemy_stack][attr_id];
+             }
+             else{
+                 return
+             }
+             let number = document.getElementById(sel_id).textContent;
              if (enemy_list[enemy_stack][attr_id] > number) {
-             	array.push(0)
-             	enemy_point += 1
-             	enemy_points.textContent = enemy_point
+                 array.push(0)
+                 enemy_point += 1
+                 enemy_points.textContent = enemy_point
              }
              else {
-             	array.push(1)
-             	player_point += 1
+                 array.push(1)
+                 player_point += 1
+                 usr_points.textContent = player_point
              }
              enemy_stack++;
+             console.log(enemy_stack)
+             if (enemy_stack==20){
+                 let newPoke = []
+                 let byePoke = []
+                 for (i=0;i<20;i++){
+                     if (array[i]==0){
+                         byePoke.push(enemy_list[i][0])
+                     }
+                     else{
+                         newPoke.push(list[i][0])
+                     }
+                 }
+                 let ans = 0;
+                 if (player_point > enemy_point){
+                     ans = 1;
+                 }
+
+                 postreq(newPoke,byePoke)
+
+                 if (player_point > enemy_point){
+                     window.location.replace("win.html");
+
+                 }
+                 else{
+                     window.location.replace("lose.html");
+
+                 }
+             }
              var rc = document.getElementById("destroy");
              rc.parentNode.removeChild(rc);
+             multaps = 1;
          }
          function refresh(id){
              if (document.getElementById("destroy") != null){
                  document.getElementById("destroy").id = tempId;
              }
+             multaps=0;
              for(i=0;i<21;i++){
                  if (list[i][0]==id){
                      name.textContent=list[i][1];
@@ -138,14 +172,16 @@
                      break;
                  }
              }
-             postreq();
          }
-         function postreq(){
+         function postreq(x,y){
+             console.log("Post Initiated")
+             console.log(y)
              $.ajax({
                  type: 'POST',
                  data: {
                      "csrfmiddlewaretoken" : document.getElementsByTagName("input")[0].value,
-                     name: "Hello"},
+                     newPoke: x,
+                     byePoke: y},
                  success: function (response) {
                      return
                  },

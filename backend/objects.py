@@ -19,6 +19,16 @@ def oppnent_random(user):
     return o
 
 
+def adminoppnent_random(user):
+    no = adminGetRandomPoke(user)
+    o=[]
+    while len(o)<=20:
+        random.seed(datetime.now())
+        z = random.randrange(1, 252)
+        if z not in o and z not in no:
+            o.append(z)
+    return o
+
 def getPoke(num):
     with sqlite3.connect('backend/poke.db') as conn:
         c = conn.cursor()
@@ -79,23 +89,45 @@ def checkAcc(username,password):
         except:
             return False
 
-
-def addCards(username,arr):
+def adminaddCards(username,arr):
     with sqlite3.connect('poke.db') as conn:
         c = conn.cursor()
         for i in arr:
             c.execute('''INSERT INTO accounts(name,password,pokeId) VALUES (?,"Me nahi bataunga",?)''',[username,i])
         conn.commit()
 
+def addCards(username,arr):
+    print(username)
+    with sqlite3.connect('backend/poke.db') as conn:
+        c = conn.cursor()
+        for i in arr:
+            c.execute('''INSERT INTO accounts(name,password,pokeId) VALUES (?,"Me nahi bataunga",?)''',[username,int(i)])
+        conn.commit()
+
+def subCards(username,arr):
+    with sqlite3.connect('backend/poke.db') as conn:
+        c = conn.cursor()
+        for i in arr:
+            c.execute('''DELETE FROM accounts WHERE name = ? AND pokeId = ?''',[username,int(i)])
+        conn.commit()
+
 def getRandomPoke(user):
     with sqlite3.connect('backend/poke.db') as conn:
+        c = conn.cursor()
+        c.execute('''SELECT DISTINCT pokeId FROM accounts WHERE name = ? AND pokeId != 0''',[user])
+        obj = list(dict.fromkeys(c.fetchall()))
+        random.shuffle(obj)
+
+    return (obj)
+
+def adminGetRandomPoke(user):
+    with sqlite3.connect('poke.db') as conn:
         c = conn.cursor()
         c.execute('''SELECT pokeId FROM accounts WHERE name = ? AND pokeId != 0''',[user])
         obj = list(dict.fromkeys(c.fetchall()))
         random.shuffle(obj)
 
     return (obj)
-
 def createAccount():
     x=input("Username:")
     y=input("Password:")
@@ -112,7 +144,7 @@ def createAccount():
 def addToCard():
     print("Select user:")
     x= input()
-    addCards(x,oppnent_random(x))
+    adminaddCards(x,adminoppnent_random(x))
     print("Cards Successfully added")
 
 def admin():
